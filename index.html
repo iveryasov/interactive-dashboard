@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Sidebar with buttons for different blocks -->
+    <aside>
+        <h1>Sidebar</h1>
+
+        <nav id="btns-nav">
+            <button data-tab="overview" class="nav-btn active">Overview</button>
+            <button data-tab="analytics" class="nav-btn">Analytics</button>
+            <button data-tab="orders" class="nav-btn">Orders</button>
+            <button data-tab="settings" class="nav-btn">Settings</button>
+        </nav>
+    </aside>
+
+    <!-- Header with greeting and brief info -->
+    <header>
+        <!--Logo aligned to the left side of the header-->
+        <img src="assets/crm-logo.png" alt="app-logo" width="300px" height="300px">
+
+        <h1>Interactive Dashboard</h1>
+
+        <button id="theme-toggle">🌙</button>
+
+        <!--User avatar-->
+        <img src="assets/user-avatar.png" alt="user-avatar" width="300px" height="300px">
+
+        <p id="description">
+            I studied JavaScript for 100 days in a row, and this project is one of the first results of my learning.<br>
+            I built an interactive dashboard with an order chart, an order list, and other functional elements.<br>
+            This is no longer just training code, but a fully functional mini-application.
+        </p>
+    </header>
+
+    <!--Main part where all blocks, the chart, etc. will be-->
+    <main>
+        <!-- Overview block -->
+        <section id="tab-overview" class="tab-content">
+            <div id="key-metrics">
+                <h2>Key Metrics</h2>
+
+                <div id="revenue-block">
+                    <h3>Revenue</h3>
+                </div>
+
+                <div id="client-block">
+                    <h3>Clients</h3>
+                </div>
+
+                <div id="conversion-block">
+                    <h3>Conversion</h3>
+                </div>
+            </div>
+
+            <div id="chart-block">
+                <h3>Chart</h3>
+
+                <canvas id="mainChart"></canvas>
+            </div>
+
+            <div id="last-orders-block">
+                <ul id="last-orders-list"></ul>
+            </div>
+        </section>
+
+        <!-- Analytics block -->
+        <section id="tab-analytics" class="tab-content hidden">
+            <h2>Section: Analytics</h2>
+        </section>
+
+        <!-- Orders block -->
+        <section id="tab-orders" class="tab-content hidden">
+            <h2>Section: Orders</h2>
+        </section>
+
+        <!-- Settings block -->
+        <section id="tab-settings" class="tab-content hidden">
+            <h2>Section: Settings</h2>
+        </section>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
