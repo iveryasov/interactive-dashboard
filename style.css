@@ -1,7 +1,43 @@
+:root {
+    --bg-color: #f4f6f8;
+    --card-bg: #ffffff;
+    --text-color: #1a1a1a;
+    --border-color: #334155;
+}
+
 body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+body.dark-theme {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-color: #f8fafc;
+    --border-color: #e2e8f0;
+
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.tab-content {
+    padding: 40px;
+
+    background-color: var(--card-bg);
+}
+
+.in-order-list-block {
+    padding: 15px;
+    
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    background-color: var(--card-bg);
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .hidden {
@@ -15,8 +51,7 @@ aside {
     width: 240px;
     height: 100%;
 
-    background-color: #d6d6ffee;
-    border: 1px #a9d1ff solid;
+    border-right: 1px solid var(--border-color);
 }
 
 header {
@@ -28,8 +63,7 @@ header {
     grid-template-columns: 1fr auto 1fr;
     grid-template-rows: 1fr auto auto;
 
-    background-color: #d6d6ffee;
-    border: 1px #a9d1ff solid;
+    border-bottom: 1px solid var(--border-color);
 }
 
 header img:first-of-type {
@@ -80,15 +114,12 @@ main {
     display: flex; 
     justify-content: center; 
     align-items: center;
-
-    background-color: #d6d6ffee;
-    border: 1px #a9d1ff solid;
 }
 
 /* Regular button */
 .nav-btn {
     background: transparent;
-    color: #64748b;
+    color: var(--btn-color);
     cursor: pointer;
 }
 
