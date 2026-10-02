@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            document.body.classList.add("dark-theme");
+        }
+    </script>
+
     <!-- Sidebar with buttons for different blocks -->
     <aside>
         <h1>Sidebar</h1>
@@ -47,21 +53,30 @@
 
                 <div id="revenue-block">
                     <h3>Revenue</h3>
+
+                    <p id="total-revenue">$0</p>
                 </div>
 
                 <div id="client-block">
                     <h3>Clients</h3>
+
+                    <p id="total-clients">0</p>
                 </div>
 
                 <div id="conversion-block">
                     <h3>Conversion</h3>
+
+                    <p id="conversion-rate">0.0%</p>
                 </div>
             </div>
 
             <div id="chart-block">
-                <h3>Chart</h3>
 
-                <canvas id="mainChart"></canvas>
+                <h3>Trend Line Chart</h3>
+                
+                <div class="chart-wrapper">
+                    <canvas id="overview-chart"></canvas>
+                </div>
             </div>
 
             <div id="last-orders-block">
@@ -108,6 +123,7 @@
         </section>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="main.js"></script>
 </body>
 </html>

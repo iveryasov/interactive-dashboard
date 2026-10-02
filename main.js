@@ -12,12 +12,19 @@ const orderStatusSelect = document.querySelector("#order-status-select");
 const createOrderButton = document.querySelector("#create-order-btn");
 const ordersBlock = document.querySelector("#orders-block");
 const ordersList = document.querySelector("#orders-list");
+const overviewChart = document.querySelector("#overview-chart");
+const totalRevenue = document.querySelector("#total-revenue");
+const totalClients = document.querySelector("#total-clients");
+const conversionRate = document.querySelector("#conversion-rate");
 
 // Check which theme is saved in localStorage
 const savedTheme = localStorage.getItem("theme");
 
 if (savedTheme === "dark") {
     document.body.classList.add("dark-theme");
+    changeThemeButton.textContent = "☀️";
+} else {
+    changeThemeButton.textContent = "🌙";
 }
 
 // Logic for the theme toggle button
@@ -26,8 +33,10 @@ changeThemeButton.addEventListener("click", () => {
 
     if (document.body.classList.contains("dark-theme")) {
         localStorage.setItem("theme", "dark");
+        changeThemeButton.textContent = "☀️";
     } else {
         localStorage.setItem("theme", "light");
+        changeThemeButton.textContent = "🌙";
     }
 });
 
@@ -47,7 +56,22 @@ buttonsNav.addEventListener("click", (event) => {
 });
 
 // Create order logic
+const saved = localStorage.getItem("orders");
 let orders = [];
+
+if (saved !== null) {
+    orders = JSON.parse(saved);
+} else {
+    const exampleOrder = {
+        id: "1770",
+        client: "Ivan",
+        amount: "250",
+        status: "Completed"
+    };
+
+    orders.unshift(exampleOrder);
+    localStorage.setItem("orders", JSON.stringify(orders));
+}
 
 // Render an order in the orders list
 const renderOrder = (order) => {
@@ -64,8 +88,17 @@ const renderOrder = (order) => {
     `);
 };
 
+// Render all saved orders
+orders.slice().reverse().forEach(order => renderOrder(order));
+
 ordersList.addEventListener("click", (event) => {
     if (event.target.classList.contains("delete-btn")) {
+        const id = event.target.dataset.id;
+
+        orders = orders.filter(order => order.id !== id);
+        localStorage.setItem("orders", JSON.stringify(orders));
+        syncMetrics();
+
         event.target.closest("li").remove();
     }
 });
@@ -81,8 +114,62 @@ orderForm.addEventListener("submit", (event) => {
     };
 
     orders.unshift(order);
+    localStorage.setItem("orders", JSON.stringify(orders));
+    syncMetrics();
 
     orderForm.reset();
 
     renderOrder(order);
 });
+
+// Chart rendering logic in the Overview block
+const mainChart = new Chart(overviewChart, {
+    type: "line",
+    data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+            label: "Weekly Revenue ($)",
+            data: [0, 0, 0, 0, 0, 0, 0],
+            borderColor: "#10b981",
+            backgroundColor: "rgba(16, 185, 129, 0.1)",
+            tension: 0.3
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
+const syncMetrics = () => {
+    const revenue = orders.reduce((total, order) => {
+        return total + order.amount;
+    }, 0);
+
+    totalRevenue.textContent = `$${revenue}`;
+
+    totalClients.textContent = `${orders.length}`;
+
+    if (orders.length === 0) {
+        conversionRate.textContent = "0%";
+    } else {
+        const completedOrders = orders.filter(order => order.status.toLowerCase() === "completed");
+
+        const conversion = (completedOrders.length / orders.length) * 100;
+
+        conversionRate.textContent = `${conversion.toFixed(1)}%`;
+    }
+
+    let today = new Date().getDay();
+
+    if (today === 0) {
+        today = 6;
+    } else {
+        today = today - 1;
+    }
+
+    mainChart.data.datasets[0].data[today] = revenue;
+    mainChart.update();
+};
+
+syncMetrics();

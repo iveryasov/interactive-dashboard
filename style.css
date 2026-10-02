@@ -3,6 +3,7 @@
     --card-bg: #ffffff;
     --text-color: #1a1a1a;
     --border-color: #334155;
+    --chart-bg: #f1eeee;
 }
 
 body {
@@ -19,6 +20,7 @@ body.dark-theme {
     --card-bg: #1e293b;
     --text-color: #f8fafc;
     --border-color: #e2e8f0;
+    --chart-bg: #13054df1;
 
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -38,6 +40,24 @@ body.dark-theme {
     background-color: var(--card-bg);
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+#chart-block {
+    box-sizing: border-box;
+    width: 1000px;
+    background-color: var(--chart-bg);
+    border-radius: 20px;
+    padding: 40px;
+    margin: 30px 0 50px;
+}
+
+#chart-block h3 {
+    margin: 0 0 20px;
+}
+
+.chart-wrapper {
+    position: relative;
+    height: 300px;
 }
 
 .hidden {
