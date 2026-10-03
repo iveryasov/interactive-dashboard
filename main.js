@@ -16,6 +16,9 @@ const overviewChart = document.querySelector("#overview-chart");
 const totalRevenue = document.querySelector("#total-revenue");
 const totalClients = document.querySelector("#total-clients");
 const conversionRate = document.querySelector("#conversion-rate");
+const lastOrdersList = document.querySelector("#last-orders-list");
+const searchInput = document.querySelector("#order-search");
+const orderStatusSearch = document.querySelector("#order-status-search");
 
 // Check which theme is saved in localStorage
 const savedTheme = localStorage.getItem("theme");
@@ -66,7 +69,8 @@ if (saved !== null) {
         id: "1770",
         client: "Ivan",
         amount: "250",
-        status: "Completed"
+        status: "Completed",
+        createdAt: Date.now()
     };
 
     orders.unshift(exampleOrder);
@@ -110,7 +114,8 @@ orderForm.addEventListener("submit", (event) => {
         id: String(Date.now()).slice(-8),
         client: clientNameInput.value,
         amount: Number(orderSumInput.value),
-        status: orderStatusSelect.options[orderStatusSelect.selectedIndex].text
+        status: orderStatusSelect.options[orderStatusSelect.selectedIndex].text,
+        createdAt: Date.now()
     };
 
     orders.unshift(order);
@@ -160,16 +165,65 @@ const syncMetrics = () => {
         conversionRate.textContent = `${conversion.toFixed(1)}%`;
     }
 
-    let today = new Date().getDay();
+    const temporaryArray = [0, 0, 0, 0, 0, 0, 0];
 
-    if (today === 0) {
-        today = 6;
-    } else {
-        today = today - 1;
-    }
+    orders.forEach(order => {
+        let suitableDay = new Date(order.createdAt).getDay();
 
-    mainChart.data.datasets[0].data[today] = revenue;
+        if (suitableDay === 0) {
+            suitableDay = 6;
+        } else {
+            suitableDay = suitableDay - 1;
+        }
+
+        temporaryArray[suitableDay] += order.amount;
+    });
+
+    mainChart.data.datasets[0].data = temporaryArray;
     mainChart.update();
+
+    renderLastOrders();
 };
 
+const renderLastOrders = () => {
+    lastOrdersList.innerHTML = "";
+
+    const lastOrders = orders.slice(0, 3);
+
+    lastOrders.forEach(order => {
+        lastOrdersList.insertAdjacentHTML("afterbegin", `
+            <li>
+                <div class="in-last-order-list-block">
+                    <h4>Client: ${order.client}</h4>
+                    <p>Total: <span class="order-amount">$${order.amount}</span></p>
+                    <p>Status: <span class="order-status">${order.status}</span></p>
+                </div>
+            </li>
+        `);
+    });
+};
+
+const applyFilters = () => {
+    ordersList.innerHTML = "";
+
+    // Get the customer name entered by the user in the input
+    const userClientSearch = searchInput.value.trim().toLowerCase();
+
+    // Get the selected by user order status
+    const userStatusSearch = orderStatusSearch.value;
+
+    const filteredOrders = orders.filter(order => order.client.trim().toLowerCase().includes(userClientSearch) && (userStatusSearch.toLowerCase() === "all" || order.status.toLowerCase() === userStatusSearch));
+
+    filteredOrders.forEach(order => renderOrder(order));
+};
+
+searchInput.addEventListener("input", () => {
+    applyFilters();
+});
+
+orderStatusSearch.addEventListener("change", () => {
+    applyFilters();
+});
+
+// Function calls block
 syncMetrics();

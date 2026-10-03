@@ -42,6 +42,19 @@ body.dark-theme {
     margin-bottom: 20px;
 }
 
+.in-last-order-list-block {
+    padding: 15px;
+    
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    background-color: var(--card-bg);
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    width: auto;
+    height: auto;
+}
+
 #chart-block {
     box-sizing: border-box;
     width: 1000px;

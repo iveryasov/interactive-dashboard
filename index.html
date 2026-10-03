@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/crm-logo.ico">
 </head>
 <body>
     <script>
@@ -88,12 +89,24 @@
 
         <!-- Analytics block -->
         <section id="tab-analytics" class="tab-content hidden">
-            <h2>Section: Analytics</h2>
+            <h2>Analytics</h2>
         </section>
 
         <!-- Orders block -->
         <section id="tab-orders" class="tab-content hidden">
-            <h2>Section: Orders</h2>
+            <h2>Orders</h2>
+
+            <div id="search-order-block">
+                <h3>Search order</h3>
+
+                <input type="text" id="order-search" placeholder="Search by client...">
+
+                <select id="order-status-search">
+                    <option value="all">All</option>
+                    <option value="completed">Completed</option>
+                    <option value="pending">Pending</option>
+                </select>
+            </div>
 
             <form id="order-form">
                 <h3>Create order</h3>
@@ -119,7 +132,7 @@
 
         <!-- Settings block -->
         <section id="tab-settings" class="tab-content hidden">
-            <h2>Section: Settings</h2>
+            <h2>Settings</h2>
         </section>
     </main>
 
