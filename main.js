@@ -19,6 +19,12 @@ const conversionRate = document.querySelector("#conversion-rate");
 const lastOrdersList = document.querySelector("#last-orders-list");
 const searchInput = document.querySelector("#order-search");
 const orderStatusSearch = document.querySelector("#order-status-search");
+const statusChart = document.querySelector("#status-chart");
+const avgOrderValue = document.querySelector("#avg-order-value");
+const maxOrderValue = document.querySelector("#max-order-value");
+const completedOrdersCount = document.querySelector("#completed-orders-count");
+const pendingOrdersCount = document.querySelector("#pending-orders-count");
+const chartDonutStatus = document.querySelector("#chart-donut-status");
 
 // Check which theme is saved in localStorage
 const savedTheme = localStorage.getItem("theme");
@@ -183,6 +189,8 @@ const syncMetrics = () => {
     mainChart.update();
 
     renderLastOrders();
+
+    updateAnalytics();
 };
 
 const renderLastOrders = () => {
@@ -224,6 +232,73 @@ searchInput.addEventListener("input", () => {
 orderStatusSearch.addEventListener("change", () => {
     applyFilters();
 });
+
+// Declare the donut chart for analyzing completed and pending orders
+const donutChart = new Chart(statusChart, {
+    type: "doughnut",
+    data: {
+        labels: ['Completed', 'Pending'],
+        datasets: [{
+            label: "Completed and pending orders",
+            data: [0, 0],
+            backgroundColor: ["#22c55e", "#f59e0b"],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        rotation: 180,
+        cutout: "70%"
+    }
+});
+
+// Analytics block logic
+const updateAnalytics = () => {
+    if (orders.length === 0) {
+        avgOrderValue.textContent = "$0";
+        maxOrderValue.textContent = "$0";
+        completedOrdersCount.textContent = "0";
+        pendingOrdersCount.textContent = "0";
+
+        chartDonutStatus.classList.remove("hidden");
+
+        donutChart.data.datasets[0].data = [0, 0];
+        donutChart.update();
+    } else {
+        // Average ticket value. Divide total revenue by the number of orders
+        const avgOrder = orders.reduce((total, order) => {
+            return total + order.amount;
+        }, 0) / orders.length;
+
+        avgOrderValue.textContent = `$${avgOrder.toFixed(2)}`;
+
+        // Largest bill
+        const bills = orders.map(order => order.amount);
+
+        const largestBill = Math.max(...bills);
+
+        maxOrderValue.textContent = `$${largestBill}`;
+
+        // Completed orders
+        const completedOrders = orders.filter(order => order.status.toLowerCase() === "completed");
+
+        completedOrdersCount.textContent = `${completedOrders.length}`;
+
+        // Pending orders
+        const pendingOrders = orders.filter(order => order.status.toLowerCase() === "pending");
+
+        pendingOrdersCount.textContent = `${pendingOrders.length}`;
+
+        // Update doughnut chart data
+        const ordersStatuses = [completedOrders.length, pendingOrders.length];
+
+        chartDonutStatus.classList.add("hidden");
+
+        donutChart.data.datasets[0].data = ordersStatuses;
+        donutChart.update();
+    }
+};
 
 // Function calls block
 syncMetrics();

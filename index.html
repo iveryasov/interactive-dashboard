@@ -49,9 +49,9 @@
     <main>
         <!-- Overview block -->
         <section id="tab-overview" class="tab-content">
-            <div id="key-metrics">
-                <h2>Key Metrics</h2>
+            <h2>Key Metrics</h2>
 
+            <div id="key-metrics">
                 <div id="revenue-block">
                     <h3>Revenue</h3>
 
@@ -71,8 +71,7 @@
                 </div>
             </div>
 
-            <div id="chart-block">
-
+            <div class="chart-block">
                 <h3>Trend Line Chart</h3>
                 
                 <div class="chart-wrapper">
@@ -90,6 +89,44 @@
         <!-- Analytics block -->
         <section id="tab-analytics" class="tab-content hidden">
             <h2>Analytics</h2>
+
+            <div id="analytic-metrics">
+                <div id="avg-order-block">
+                    <h3>Average Order Value</h3>
+
+                    <p id="avg-order-value">$0</p>
+                </div>
+
+                <div id="max-order-block">
+                    <h3>Top Sale</h3>
+
+                    <p id="max-order-value">$0</p>
+                </div>
+
+                <div id="completed-orders-block">
+                    <h3>Completed Orders</h3>
+
+                    <p id="completed-orders-count">0</p>
+                </div>
+
+                <div id="pending-orders-block">
+                    <h3>Pending Orders</h3>
+
+                    <p id="pending-orders-count">0</p>
+                </div>
+            </div>
+
+            <div class="chart-block">
+                <h3>Order Status Distribution</h3>
+                
+                <div class="chart-wrapper">
+                    <canvas id="status-chart"></canvas>
+
+                    <div id="chart-donut-status">
+                        <p>At the moment, you have no orders</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Orders block -->
