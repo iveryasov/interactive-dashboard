@@ -25,6 +25,44 @@ const maxOrderValue = document.querySelector("#max-order-value");
 const completedOrdersCount = document.querySelector("#completed-orders-count");
 const pendingOrdersCount = document.querySelector("#pending-orders-count");
 const chartDonutStatus = document.querySelector("#chart-donut-status");
+const currencySelect = document.querySelector("#currency-select");
+const adminNameInput = document.querySelector("#admin-name-input");
+const confirmNameButton = document.querySelector("#confirm-name-btn");
+const adminNameDisplay = document.querySelector("#admin-name-display");
+const resetDataButton = document.querySelector("#reset-data-btn");
+
+let currentCurrency = localStorage.getItem("currency") || "$";
+
+currencySelect.addEventListener("change", () => {
+    if (currencySelect.value === "usd") {
+        currentCurrency = "$";
+    } else {
+        currentCurrency = "€";
+    }
+
+    localStorage.setItem("currency", currentCurrency);
+
+    syncMetrics();
+    applyFilters();
+});
+
+let adminName = localStorage.getItem("adminName") || "Admin";
+
+adminNameDisplay.textContent = adminName;
+
+confirmNameButton.addEventListener("click", () => {
+    if (adminNameInput.value === "") {
+        adminName = "Admin";
+    } else {
+        adminName = `${adminNameInput.value.trim()}`;
+    }
+
+    localStorage.setItem("adminName", adminName);
+
+    adminNameDisplay.textContent = adminName;
+
+    adminNameInput.value = "";
+});
 
 // Check which theme is saved in localStorage
 const savedTheme = localStorage.getItem("theme");
@@ -90,7 +128,7 @@ const renderOrder = (order) => {
             <div class="in-order-list-block">
                 <h4>Client: ${order.client}</h4>
                 <p>Order ID: <span class="order-id">${order.id}</span></p>
-                <p>Total: <span class="order-amount">$${order.amount}</span></p>
+                <p>Total: <span class="order-amount">${currentCurrency}${order.amount}</span></p>
                 <p>Status: <span class="order-status">${order.status}</span></p>
                 <button class="delete-btn" data-id="${order.id}">✕</button>
             </div>
@@ -157,7 +195,7 @@ const syncMetrics = () => {
         return total + order.amount;
     }, 0);
 
-    totalRevenue.textContent = `$${revenue}`;
+    totalRevenue.textContent = `${currentCurrency}${revenue}`;
 
     totalClients.textContent = `${orders.length}`;
 
@@ -203,7 +241,7 @@ const renderLastOrders = () => {
             <li>
                 <div class="in-last-order-list-block">
                     <h4>Client: ${order.client}</h4>
-                    <p>Total: <span class="order-amount">$${order.amount}</span></p>
+                    <p>Total: <span class="order-amount">${currentCurrency}${order.amount}</span></p>
                     <p>Status: <span class="order-status">${order.status}</span></p>
                 </div>
             </li>
@@ -256,8 +294,8 @@ const donutChart = new Chart(statusChart, {
 // Analytics block logic
 const updateAnalytics = () => {
     if (orders.length === 0) {
-        avgOrderValue.textContent = "$0";
-        maxOrderValue.textContent = "$0";
+        avgOrderValue.textContent = `${currentCurrency}0`;
+        maxOrderValue.textContent = `${currentCurrency}0`;
         completedOrdersCount.textContent = "0";
         pendingOrdersCount.textContent = "0";
 
@@ -271,14 +309,14 @@ const updateAnalytics = () => {
             return total + order.amount;
         }, 0) / orders.length;
 
-        avgOrderValue.textContent = `$${avgOrder.toFixed(2)}`;
+        avgOrderValue.textContent = `${currentCurrency}${avgOrder.toFixed(2)}`;
 
         // Largest bill
         const bills = orders.map(order => order.amount);
 
         const largestBill = Math.max(...bills);
 
-        maxOrderValue.textContent = `$${largestBill}`;
+        maxOrderValue.textContent = `${currentCurrency}${largestBill}`;
 
         // Completed orders
         const completedOrders = orders.filter(order => order.status.toLowerCase() === "completed");
@@ -302,3 +340,26 @@ const updateAnalytics = () => {
 
 // Function calls block
 syncMetrics();
+
+// Danger zone
+resetDataButton.addEventListener("click", () => {
+    const confirmWindow = confirm("Are you sure? All orders and stats will be permanently wiped.");
+
+    if (confirmWindow === true) {
+        localStorage.removeItem("orders");
+        orders = [];
+
+        localStorage.removeItem("adminName");
+        adminName = "Admin";
+        adminNameDisplay.textContent = adminName;
+
+        localStorage.removeItem("currency");
+        currentCurrency = "$";
+        currencySelect.value = "usd";
+        
+        applyFilters();
+        syncMetrics();
+    } else {
+        return null;
+    }
+});

@@ -20,7 +20,7 @@ body.dark-theme {
     --card-bg: #1e293b;
     --text-color: #f8fafc;
     --border-color: #e2e8f0;
-    --chart-bg: #2a1b64f1;
+    --chart-bg: #111c36;
 
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -144,7 +144,7 @@ header img:last-of-type {
     height: 100px;
 }
 
-#description {
+#admin-name-display {
     grid-column: 1 / -1;
     grid-row: 3;
     margin: 0;

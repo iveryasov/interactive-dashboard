@@ -38,11 +38,7 @@
         <!--User avatar-->
         <img src="assets/user-avatar.png" alt="user-avatar" width="300px" height="300px">
 
-        <p id="description">
-            I studied JavaScript for 100 days in a row, and this project is one of the first results of my learning.<br>
-            I built an interactive dashboard with an order chart, an order list, and other functional elements.<br>
-            This is no longer just training code, but a fully functional mini-application.
-        </p>
+        <span id="admin-name-display">Admin</span>
     </header>
 
     <!--Main part where all blocks, the chart, etc. will be-->
@@ -170,6 +166,29 @@
         <!-- Settings block -->
         <section id="tab-settings" class="tab-content hidden">
             <h2>Settings</h2>
+
+            <div id="general-settings-block">
+                <h3>General Settings</h3>
+
+                <input type="text" id="admin-name-input" placeholder="Enter your name...">
+                
+                <button id="confirm-name-btn">Confirm</button>
+
+                <h3>Select currency</h3>
+
+                <select id="currency-select">
+                    <option value="usd">USD ($)</option>
+                    <option value="eur">EUR (€)</option>
+                </select>
+            </div>
+
+            <div id="danger-zone">
+                <h3>Danger Zone</h3>
+
+                <p>Once you reset the database, there is no going back.</p>
+
+                <button id="reset-data-btn">Reset All Data</button>
+            </div>
         </section>
     </main>
 
