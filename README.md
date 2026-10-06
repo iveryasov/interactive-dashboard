@@ -21,7 +21,7 @@ A high-performance Single Page Application (SPA) dashboard built with Vanilla Ja
 
 ## 🛠️ Tech Stack
 
-* **Logic & State:** Pure Vanilla JavaScript (ES6+, DOM API, Event Delegation, Higher-Order Functions, LocalStorage)
+* **Logic & State:** Pure Vanilla JavaScript (ES6+, Event Delegation, Higher-Order Functions, LocalStorage)
 * **Visualizations:** Chart.js
 * **Structure:** Semantic HTML5 (`<aside>`, `<header>`, `<main>`, `<section>`)
 * **Styling:** Modern CSS3 (CSS Variables, Flexbox, Desktop Layout)
