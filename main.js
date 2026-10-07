@@ -51,8 +51,8 @@ let adminName = localStorage.getItem("adminName") || "Admin";
 adminNameDisplay.textContent = adminName;
 
 confirmNameButton.addEventListener("click", () => {
-    if (adminNameInput.value === "") {
-        adminName = "Admin";
+    if (adminNameInput.value.trim() === "") {
+        alert("Enter the admin's name");
     } else {
         adminName = `${adminNameInput.value.trim()}`;
     }
@@ -154,9 +154,17 @@ ordersList.addEventListener("click", (event) => {
 orderForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
+    const clientName = clientNameInput.value.trim();
+
+    if (clientName === "") {
+        alert("Enter the client's name");
+        orderForm.reset();
+        return null;
+    }
+
     const order = {
         id: String(Date.now()).slice(-8),
-        client: clientNameInput.value,
+        client: clientName,
         amount: Number(orderSumInput.value),
         status: orderStatusSelect.options[orderStatusSelect.selectedIndex].text,
         createdAt: Date.now()

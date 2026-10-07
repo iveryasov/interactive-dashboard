@@ -132,7 +132,7 @@
             <div id="search-order-block">
                 <h3>Search order</h3>
 
-                <input type="text" id="order-search" placeholder="Search by client...">
+                <input type="text" id="order-search" placeholder="Search by client..." maxlength="25">
 
                 <select id="order-status-search">
                     <option value="all">All</option>
@@ -144,9 +144,9 @@
             <form id="order-form">
                 <h3>Create order</h3>
 
-                <input type="text" id="client-name-input" placeholder="Client name..." required>
+                <input type="text" id="client-name-input" placeholder="Client name..." maxlength="25" required>
 
-                <input type="number" id="order-sum-input" placeholder="Total:" required>
+                <input type="number" id="order-sum-input" placeholder="Total:" min="1" required>
 
                 <select id="order-status-select">
                     <option value="completed">Completed</option>
@@ -170,7 +170,7 @@
             <div id="general-settings-block">
                 <h3>General Settings</h3>
 
-                <input type="text" id="admin-name-input" placeholder="Enter your name...">
+                <input type="text" id="admin-name-input" placeholder="Enter your name..." maxlength="25">
                 
                 <button id="confirm-name-btn">Confirm</button>
 
