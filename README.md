@@ -2,8 +2,16 @@
 
 A high-performance Single Page Application (SPA) dashboard built with Vanilla JavaScript. Designed for real-time order tracking, business metrics calculation, and deep state management.
 
-> 🖥️ **Display Architecture Note:**  
+Architecture Note:**  
 > This application is strictly optimized for **Desktop & Wide Displays (1440px+)**. The primary focus of this project is complex Vanilla JavaScript architecture, reactive state management, Chart.js integrations, and DOM manipulation rather than mobile responsive styling.
+
+---
+
+## 📸 Screenshots Preview
+
+| Dark Theme | Light Theme |
+|:---:|:---:|
+| ![Dark Theme](screenshots/donut-chart-dark.png) | ![Light Theme](screenshots/analytics-block-light.png) |
 
 ---
 
@@ -21,15 +29,16 @@ A high-performance Single Page Application (SPA) dashboard built with Vanilla Ja
 
 ## 🛠️ Tech Stack
 
-* **Logic & State:** Pure Vanilla JavaScript (ES6+, Event Delegation, Higher-Order Functions, LocalStorage)
+* **Logic & State:** Pure Vanilla JavaScript (ES6+, DOM API, Event Delegation, Higher-Order Functions, LocalStorage)
 * **Visualizations:** Chart.js
 * **Structure:** Semantic HTML5 (`<aside>`, `<header>`, `<main>`, `<section>`)
 * **Styling:** Modern CSS3 (CSS Variables, Flexbox, Desktop Layout)
+* **Deployment:** Vercel
 
 ---
 
 ## 📦 How to Run
 
-1. Clone or download this repository.
-2. Open `index.html` in any modern web browser (best viewed at 1920x1080 / Desktop screen).
-3. No build tools, bundlers, or external dependencies required.
+### Live Web Version
+Open the deployed application in any modern desktop browser:  
+👉 **[Open Live Project](https://interactive-crm-dashboard.vercel.app)**
