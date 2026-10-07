@@ -2,7 +2,7 @@
 
 A high-performance Single Page Application (SPA) dashboard built with Vanilla JavaScript. Designed for real-time order tracking, business metrics calculation, and deep state management.
 
-Architecture Note:**  
+Architecture Note:  
 > This application is strictly optimized for **Desktop & Wide Displays (1440px+)**. The primary focus of this project is complex Vanilla JavaScript architecture, reactive state management, Chart.js integrations, and DOM manipulation rather than mobile responsive styling.
 
 ---
